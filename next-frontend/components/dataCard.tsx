@@ -3,8 +3,8 @@
 
 import styles from './dataCard.module.css';
 import {ISportfield} from './searchBar';
-import {SubmitEvent} from "react";
-import {handleSearch} from "@/actions/search";
+//import {SubmitEvent} from "react";
+//import {handleSearch} from "@/actions/search";
 
 interface IHeader {
     id: number,
@@ -29,8 +29,7 @@ export default function DataCard( {data} : DataCardProps) {
     console.log("LOG 'dataCard.tsx' :");
     console.log(data);
 
-    async function handleSubmit(event: SubmitEvent<HTMLFormElement>) {
-    }
+    //async function handleSubmit(event: SubmitEvent<HTMLFormElement>) { }
 
     return (
         <div className={styles.container}>

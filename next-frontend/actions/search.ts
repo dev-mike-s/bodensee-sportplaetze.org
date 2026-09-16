@@ -1,97 +1,94 @@
-'use server'
+    
+    'use server'
 
-import { prisma } from "@/lib/prisma";
+    import {prisma} from "@/lib/prisma";
 
-export type RawSportfield = {
-    id: number;
-    name: string | null;
-    rating: number;
-    location: {
-        street: string | null;
-        name: string | null;
+    /* Server Action for components/searchBar.tsx 'handleSearch':
+     * With Prisma as ORM (Fullstack Next.js).
+     */
+
+    export type RawSportfield = {
         id: number;
-        locality_id: number;
-        localities: {
-            id: number;
-            name: string;
-            zipcode: number;
-            type: string | null;
-        };
-    } | null;
-    sportfield_sporttype: {
-        sportfield_id: number;
-        sporttype_id: number;
-        sporttype: {
+        name: string | null;
+        rating: number;
+        address: {
             id: number;
             name: string | null;
+            street: string | null;
+            localityId: number;
+            locality: {
+                id: number;
+                name: string;
+                zipcode: number;
+                localityType: string | null;
+            };
+        } | null;
+        sportFieldType: {
+            sportFieldId: number;
+            sportTypeId: number;
+            sportType: {
+                id: number;
+                name: string | null;
+            }
+        } [],
+    };
+
+    export async function handleSearch(city: string, sport: string) {
+
+        let result: RawSportfield[] | null = null;
+
+        console.log("LOG: Anfrage in actions angekommen!");
+
+        if (!city && !sport) {
+            return [];
         }
-    } [],
-    sportfieldimage: {
-        id: number;
-        sportfield_id: number;
-        url: string | null;
-        sort_order: number | null;
-    }  []
-};
 
-export async function handleSearch(city: string, sport: string) {
+        try {
+            result = await prisma.sportField.findMany({
+                where: {
+                    sportFieldType: {
+                        some: {
+                            sportType: {
+                                name: sport
+                            }
+                        }
+                    },
+                    address: {
+                        locality: {
+                                name: city
+                        },
+                    }
+                },
 
-    let result: RawSportfield[] | null = null;
-
-    console.log("LOG: Anfrage in actions angekommen!");
-
-    if (!city && !sport) {
-        return [];
-    }
-
-    try {
-        result = await prisma.sportfield.findMany({
-            where: {
-                sportfield_sporttype: {
-                    some: {
-                        sporttype: {
-                            name: sport
+                include: {
+                    address: {
+                        include: {
+                            locality: true
+                        }
+                    },
+                    sportFieldType: {
+                        include: {
+                            sportType: true
                         }
                     }
                 },
-                location: {
-                    localities: {
-                        name: city
-                    }
-                },
-            },
 
-            include: {
-                location: {
-                    include: {
-                        localities: true
-                    }
-                },
-                sportfield_sporttype: {
-                    include: {
-                        sporttype: true
-                    }
-                },
-                sportfieldimage: true,
-            },
+            });
+            console.log("LOG: 'search.ts': ");
+            console.log(result);
 
-        });
-        console.log("LOG: 'search.ts': ");
-        console.log(result);
+        } catch (error) {
+            console.error("LOG: Fehler: " );
+            console.error(error);
+            return null;
+        }
 
-    } catch (error) {
-        console.error("LOG: Fehler: " );
-        console.error(error);
-        return null;
+        return result!.map((r: RawSportfield) => ({
+            id: r.id,
+            name: r.name,
+            rating: r.rating,
+            city: r.address?.locality.name ?? "",
+            street: r.address?.street ?? "",
+            sports: r.sportFieldType.map(s => s.sportType.name ?? ""),
+        }));
     }
-
-    return result!.map((r: RawSportfield) => ({
-        id: r.id,
-        name: r.name,
-        rating: r.rating,
-        city: r.location?.localities.name ?? "",
-        street: r.location?.street ?? "",
-        sports: r.sportfield_sporttype.map(s => s.sporttype.name ?? ""),
-        images: r.sportfieldimage.map(i => i.url ?? ""),
-    }));
-}

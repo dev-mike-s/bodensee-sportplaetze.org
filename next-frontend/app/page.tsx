@@ -10,16 +10,19 @@ export default function HomePage() {
             <div className="text-center">
 
                 <h1 className="mt-10">
-                    Willkommen!
+                    Willkommen Hobbysportler!
                 </h1>
 
                 <br></br>
 
-                <h3 className="mt-10">
-                    Welchen Platz möchtest du finden?
-                </h3>
+                <div className="bg-stone-100 ">
 
-                <SearchBar />
+                    <h3 className="mt-10">
+                        Welchen Platz möchtest du finden?
+                    </h3>
+
+                    <SearchBar />
+                </div>
 
             </div>
         </main>
