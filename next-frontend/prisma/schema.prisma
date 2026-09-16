@@ -1,3 +1,4 @@
+
 generator client {
   provider = "prisma-client"
   output   = "../generated/prisma"
@@ -7,60 +8,52 @@ datasource db {
   provider = "postgresql"
 }
 
-model localities {
-  id       Int        @id @default(autoincrement())
-  name     String     @unique @db.VarChar(30)
-  zipcode  Int
-  type     type?
-  location location[]
+model Locality {
+  id              Int        @id @default(autoincrement())
+  name            String     @unique @db.VarChar(30)
+  zipcode         Int
+  localityType    LocalityType?
+  addresses       Address[]
 }
 
-model location {
-  id          Int          @id @default(autoincrement())
-  name        String?      @db.VarChar(30)
-  street      String?      @db.VarChar(30)
-  locality_id Int
-  localities  localities   @relation(fields: [locality_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  sportfield  sportfield[]
+model Address {
+  id            Int          @id @default(autoincrement())
+  name          String?      @db.VarChar(30)
+  street        String?      @db.VarChar(30)
+  localityId    Int
+  locality      Locality     @relation(fields: [localityId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  sportFields   SportField[]
 }
 
-model sportfield {
-  id                   Int                    @id @default(autoincrement())
-  location_id          Int?
-  name                 String?                @db.VarChar(30)
-  floor                String?                @db.VarChar(20)
-  text                 String?                @db.VarChar(50)
-  rating               Int
-  location             location?              @relation(fields: [location_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  sportfield_sporttype sportfield_sporttype[]
-  sportfieldimage      sportfieldimage[]
+model SportField {
+  id                Int                 @id @default(autoincrement())
+  addressId         Int?
+  name              String?             @db.VarChar(30)
+  floor             String?             @db.VarChar(20)
+  description       String?             @db.VarChar(50)
+  rating            Int
+  
+  address           Address?            @relation(fields: [addressId], references: [id])
+  sportFieldType    SportFieldType[]
 }
 
-model sportfield_sporttype {
-  sportfield_id Int
-  sporttype_id  Int
-  sportfield    sportfield @relation(fields: [sportfield_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  sporttype     sporttype  @relation(fields: [sporttype_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+model SportFieldType {
+  sportFieldId  Int
+  sportTypeId   Int
+  sportFields   SportField  @relation(fields: [sportFieldId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  sportType     SportType   @relation(fields: [sportTypeId], references: [id], onDelete: NoAction, onUpdate: NoAction)
 
-  @@id([sportfield_id, sporttype_id])
+  @@id([sportFieldId, sportTypeId])
 }
 
-model sportfieldimage {
-  id            Int        @id @default(autoincrement())
-  sportfield_id Int
-  url           String?    @db.VarChar(200)
-  sort_order    Int?
-  sportfield    sportfield @relation(fields: [sportfield_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+model SportType {
+  id              Int                    @id @default(autoincrement())
+  name            String?                @db.VarChar(30)
+  sportFieldType  SportFieldType[]
 }
 
-model sporttype {
-  id                   Int                    @id @default(autoincrement())
-  name                 String?                @db.VarChar(30)
-  sportfield_sporttype sportfield_sporttype[]
-}
-
-enum type {
-  Stadt
-  Stadtteil
-  Gemeinde
+enum LocalityType {
+  CITY
+  DISTRICT
+  MUNICIPALITY
 }

@@ -6,5 +6,3 @@ export type sportfield = {
     image: string,
     rating: number,
 };
-
-

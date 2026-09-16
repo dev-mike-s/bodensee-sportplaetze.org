@@ -2,7 +2,7 @@
 'use client'
 
 import styles from './searchBar.module.css';
-import {useState, SubmitEvent, useRef, Fragment} from "react";
+import {useState, SubmitEvent} from "react";
 import {handleSearch} from '@/actions/search';
 import DataCard from './dataCard';
 
@@ -13,7 +13,6 @@ export interface ISportfield {
     city: string;
     street: string | null;
     sports: string[] | null;
-    images: string[];
 }
 
 export default function SearchBar() {
@@ -22,9 +21,9 @@ export default function SearchBar() {
     const [sport, setSport] = useState("");
     const [searchResult, setSearchResult] = useState<ISportfield[] | null>(null);
 
-    // Event Handler
-    // ChangeEvent versus 'onInput=' => Typ-Fehler bei onInput.
-    //todo: city and sport für Statistiken extra an die DB schicken..
+    // Event Handler:
+    // 'ChangeEvent' versus 'onInput=' => Typ-Fehler bei onInput.
+    // TODO: city and sport für Statistiken extra an die DB schicken..
     const handleLocation = (e: React.ChangeEvent<HTMLInputElement>) => {
         setCity(e.target.value);
     }
@@ -33,10 +32,10 @@ export default function SearchBar() {
         setSport(e.target.value);
     }
 
-    //Info: React.FormEvent is deprecated, newest: ChangeEvent, InputEvent, SubmitEvent, SyntethicEvent.
-    //FormData schien auch nicht Typ-kompatibel, seitens onSubmit und den Eventtypen.
+    // Info: React.FormEvent is deprecated, newest: ChangeEvent, InputEvent, SubmitEvent, SyntethicEvent.
+    // FormData schien auch nicht Typ-kompatibel, seitens onSubmit und den Eventtypen.
     async function handleSubmit(event: SubmitEvent<HTMLFormElement>) {
-        //event.currentTarget => form
+        // event.currentTarget => form
         event.preventDefault();
         const formCity = event.currentTarget.city.value;
         const formSport = event.currentTarget.sports.value;
@@ -46,7 +45,7 @@ export default function SearchBar() {
                 setSearchResult(serverResult);
                 console.log("LOG 'searchBar.tsx' :");
                 console.log(serverResult);
-                //if (searchResult) { setRes(searchResult); }
+                // if (searchResult) { setRes(searchResult); }
             }
         } catch (error) {
             console.error(error);
@@ -99,8 +98,14 @@ export default function SearchBar() {
             </div>
 
             <div className="content-center mt-20">
-                {city ? ( <h3 className="text-2xl">Ergebnisse für &quot;<i>{city}</i>&quot; , &quot;<i>{sport}</i>&quot; : </h3>) : null}
+                
+                {city ? ( 
+                    <h3 className="text-2xl">Ergebnisse für &quot;<i>{city}</i>&quot; , &quot;<i>{sport}</i>&quot; : 
+                    </h3>) 
+                : null}
+                
                 <div style={{ padding:10 }} className="mt-15">
+                    
                     { searchResult ? (
                         <DataCard data={searchResult}>
                         </DataCard>
