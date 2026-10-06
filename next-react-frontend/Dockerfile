@@ -1,43 +1,75 @@
 # syntax=docker/dockerfile:1
 
-# Comments are provided throughout this file to help you get started.
-# If you need more help, visit the Dockerfile reference guide at
-# https://docs.docker.com/go/dockerfile-reference/
-
-# Want to help us make this template better? Share your feedback here: https://forms.gle/ybq9Krt8jtBL3iCk7
-
+# ============================================
+# Stage 1: Dependencies
+# ============================================
 ARG NODE_VERSION=24.16.0
-ARG PNPM_VERSION=12.8.1
+ARG PNPM_VERSION=12.9.1
 
-FROM node:${NODE_VERSION}-alpine
+FROM node:${NODE_VERSION}-alpine AS deps
+WORKDIR /usr/src/app
 
-# Use production node environment by default.
-ENV NODE_ENV production
-
-# Install pnpm.
 RUN --mount=type=cache,target=/root/.npm \
     npm install -g pnpm@${PNPM_VERSION}
 
+# Nur die Lockfiles kopieren für besseres Caching
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
+COPY prisma ./prisma
+COPY prisma.config.ts ./
+
+# Dependencies installieren (inkl. devDependencies für den Build)
+RUN --mount=type=cache,target=/root/.local/share/pnpm/store \
+    pnpm install --frozen-lockfile --ignore-scripts
+
+# ============================================
+# Stage 2: Build
+# ============================================
+FROM node:${NODE_VERSION}-alpine AS builder
 WORKDIR /usr/src/app
 
-# Download dependencies as a separate step to take advantage of Docker's caching.
-# Leverage a cache mount to /root/.local/share/pnpm/store to speed up subsequent builds.
-# Leverage a bind mounts to package.json and pnpm-lock.yaml to avoid having to copy them into
-# into this layer.
-RUN --mount=type=bind,source=package.json,target=package.json \
-    --mount=type=bind,source=pnpm-lock.yaml,target=pnpm-lock.yaml \
-    --mount=type=bind,source=pnpm-workspace.yaml,target=pnpm-workspace.yaml \
-    --mount=type=cache,target=/root/.local/share/pnpm/store \
-    pnpm install --prod --frozen-lockfile
+RUN --mount=type=cache,target=/root/.npm \
+    npm install -g pnpm@${PNPM_VERSION}
 
-# Run the application as a non-root user.
-USER node
-
-# Copy the rest of the source files into the image.
+COPY --from=deps /usr/src/app/node_modules ./node_modules
 COPY . .
 
-# Expose the port that the application listens on.
-EXPOSE 5432
+# Prisma Client generieren
+ENV DATABASE_URL="postgresql://user:pass@localhost:5432/db"
+RUN pnpm exec prisma generate
 
-# Run the application.
-CMD pnpm start
+# Next.js Produktions-Build erstellen
+ENV NEXT_TELEMETRY_DISABLED=1
+RUN pnpm build
+
+# ============================================
+# Stage 3: Production Runner
+# ============================================
+FROM node:${NODE_VERSION}-alpine AS runner
+WORKDIR /usr/src/app
+
+ENV NODE_ENV=production
+ENV NEXT_TELEMETRY_DISABLED=1
+# Deaktiviert pnpms automatische Prüfung vor jedem Start
+ENV CI=true
+ENV PNPM_CONFIG_VERIFY_DEPS_BEFORE_RUN=false
+
+RUN addgroup --system --gid 1001 nodejs && \
+    adduser --system --uid 1001 nextjs
+
+# Standalone-Output kopieren (enthält bereits alle nötigen node_modules)
+COPY --from=builder --chown=nextjs:nodejs /usr/src/app/.next/standalone ./
+# Statische Dateien kopieren
+COPY --from=builder --chown=nextjs:nodejs /usr/src/app/.next/static ./.next/static
+# Public-Ordner kopieren (falls vorhanden)
+COPY --from=builder --chown=nextjs:nodejs /usr/src/app/public ./public
+# Prisma-Schema und generierter Client für Runtime-Zugriff
+COPY --from=builder --chown=nextjs:nodejs /usr/src/app/prisma ./prisma
+
+USER nextjs
+
+EXPOSE 3000
+ENV PORT=3000
+ENV HOSTNAME="0.0.0.0"
+
+# Standalone-Server direkt starten (nicht "pnpm start")
+CMD ["node", "server.js"]
