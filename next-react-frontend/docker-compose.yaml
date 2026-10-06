@@ -1,0 +1,11 @@
+services:
+  server:
+    build:
+      context: .
+    environment:
+      NODE_ENV: production
+      DATABASE_URL: postgresql://postgres:passwort123@host.docker.internal:5432/sportplaetzeDB
+    ports:
+      - "3000:3000"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
