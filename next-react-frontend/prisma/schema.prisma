@@ -9,10 +9,12 @@ datasource db {
 }
 
 model Locality {
-  id              Int        @id @default(autoincrement())
-  name            String     @unique @db.VarChar(30)
-  zipcode         Int
+  id              Int         @id @default(autoincrement())
+  name            String      @unique @db.VarChar(30)
   localityType    LocalityType?
+  parentId        Int?
+  parent          Locality?   @relation("LocalityHierarchy", fields: [parentId], references: [id])
+  children        Locality[]  @relation("LocalityHierarchy")
   addresses       Address[]
 }
 
@@ -20,6 +22,7 @@ model Address {
   id            Int          @id @default(autoincrement())
   name          String?      @db.VarChar(30)
   street        String?      @db.VarChar(30)
+  zipcode       Int
   localityId    Int
   locality      Locality     @relation(fields: [localityId], references: [id], onDelete: NoAction, onUpdate: NoAction)
   sportFields   SportField[]
@@ -32,7 +35,7 @@ model SportField {
   floor             String?             @db.VarChar(20)
   description       String?             @db.VarChar(50)
   rating            Int
-  
+  imageId           Int?
   address           Address?            @relation(fields: [addressId], references: [id])
   sportFieldType    SportFieldType[]
 }

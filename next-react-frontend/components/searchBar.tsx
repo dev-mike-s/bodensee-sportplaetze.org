@@ -71,6 +71,29 @@ export default function SearchBar() {
                     <fieldset className="mb-4">
                         <label className="pt-4">Sportarten auswählen</label>
                         <br></br>
+
+                        <input onChange={handleSport}
+                               type="radio"
+                               name="sports"
+                               value="Fußball"
+                               required
+                        />
+                        <label htmlFor="fußball">
+                            Fußball
+                        </label>
+                        <br></br>
+
+                        <input onChange={handleSport}
+                               type="radio"
+                               name="sports"
+                               value="Fußball"
+                               required
+                        />
+                        <label htmlFor="fußball">
+                            Tennis
+                        </label>
+                        <br></br>
+
                         <input onChange={handleSport}
                                type="radio"
                                name="sports"
@@ -81,6 +104,18 @@ export default function SearchBar() {
                             Tischtennis
                         </label>
                         <br></br>
+
+                        <input onChange={handleSport}
+                               type="radio"
+                               name="sports"
+                               value="Fußball"
+                               required
+                        />
+                        <label htmlFor="fußball">
+                            Volleyball
+                        </label>
+                        <br></br>
+
                         <input onChange={handleSport}
                                type="radio"
                                name="sports"
@@ -91,6 +126,18 @@ export default function SearchBar() {
                             Basketball
                         </label>
                         <br></br>
+
+                        <input onChange={handleSport}
+                               type="radio"
+                               name="sports"
+                               value="Fußball"
+                               required
+                        />
+                        <label htmlFor="fußball">
+                            Minigolf
+                        </label>
+                        <br></br>
+
                     </fieldset>
 
                     <button className={styles.button} type="submit">Suchen</button>
