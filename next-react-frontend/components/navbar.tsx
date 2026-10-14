@@ -5,8 +5,7 @@
 'use client'
 
 import Image from 'next/image'
-import { Menu } from 'lucide-react';
-import {useState} from 'react'
+import {Menu} from 'lucide-react';
 
 /**
  * @returns
@@ -15,14 +14,17 @@ import {useState} from 'react'
 export default function Navbar() {
     return (
         <nav className="relative bg-gray-100">
-            <div className="mx-auto max-w-7xl px-2 lg:px-8">
+
+            <div className="mx-auto max-w-7xl px-4 lg:px-8">
+
                 <div className="relative flex h-40 items-center justify-between">
+
                     <Image src="/logo-desktop.png"
                            width={300}
                            height={300}
                            alt="brand logo"
                     />
-                    <Menu />
+                    <Menu className="m-10"/>
                 </div>
             </div>
         </nav>
