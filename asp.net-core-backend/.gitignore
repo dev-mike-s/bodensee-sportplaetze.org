@@ -1,0 +1,54 @@
+# Visual Studio / IDE
+.vs/
+.vscode/
+.idea/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Build output
+**/bin/
+**/obj/
+**/artifacts/
+
+# Publish
+**/publish/
+
+# Test output
+**/TestResults/
+*.trx
+
+# NuGet
+*.nupkg
+packages/
+
+# Entity Framework / Local DB
+*.mdf
+*.ldf
+*.sqlite
+*.db
+
+# Logs
+*.log
+*.tmp
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# JetBrains Rider / IntelliJ
+*.iml
+_ReSharper*/
+*.DotSettings.user
+
+# Generated MSBuild files
+**/project.assets.json
+
+# Machine-specific configuration
+# Ignore development settings and launch profiles if they contain secrets or machine-specific values
+**/appsettings.Development.json
+**/Properties/launchSettings.json
+
+# Optional: ignore IDE HTTP request collections
+*.http
