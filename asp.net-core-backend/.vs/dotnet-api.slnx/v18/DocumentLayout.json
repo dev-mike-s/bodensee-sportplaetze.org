@@ -1,12 +1,69 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "D:\\sourcecode\\bodensee-sportplaetze\\asp.net-core-backend\\",
-  "Documents": [],
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{F68FCBC0-FFC6-AFA7-53E2-FD602A6620D4}|dotnet-api\\dotnet-api.csproj|d:\\sourcecode\\bodensee-sportplaetze\\asp.net-core-backend\\dotnet-api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F68FCBC0-FFC6-AFA7-53E2-FD602A6620D4}|dotnet-api\\dotnet-api.csproj|solutionrelative:dotnet-api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F68FCBC0-FFC6-AFA7-53E2-FD602A6620D4}|dotnet-api\\dotnet-api.csproj|d:\\sourcecode\\bodensee-sportplaetze\\asp.net-core-backend\\dotnet-api\\interfaces\\iimagedisplaysevice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F68FCBC0-FFC6-AFA7-53E2-FD602A6620D4}|dotnet-api\\dotnet-api.csproj|solutionrelative:dotnet-api\\interfaces\\iimagedisplaysevice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F68FCBC0-FFC6-AFA7-53E2-FD602A6620D4}|dotnet-api\\dotnet-api.csproj|d:\\sourcecode\\bodensee-sportplaetze\\asp.net-core-backend\\dotnet-api\\services\\imagedisplayservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F68FCBC0-FFC6-AFA7-53E2-FD602A6620D4}|dotnet-api\\dotnet-api.csproj|solutionrelative:dotnet-api\\services\\imagedisplayservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
       "VerticalTabListWidth": 256,
-      "DocumentGroups": []
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 2,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "ImageDisplayService.cs",
+              "DocumentMoniker": "D:\\sourcecode\\bodensee-sportplaetze\\asp.net-core-backend\\dotnet-api\\Services\\ImageDisplayService.cs",
+              "RelativeDocumentMoniker": "dotnet-api\\Services\\ImageDisplayService.cs",
+              "ToolTip": "D:\\sourcecode\\bodensee-sportplaetze\\asp.net-core-backend\\dotnet-api\\Services\\ImageDisplayService.cs",
+              "RelativeToolTip": "dotnet-api\\Services\\ImageDisplayService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAEAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-16T08:25:13.076Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "IImageDisplaySevice.cs",
+              "DocumentMoniker": "D:\\sourcecode\\bodensee-sportplaetze\\asp.net-core-backend\\dotnet-api\\Interfaces\\IImageDisplaySevice.cs",
+              "RelativeDocumentMoniker": "dotnet-api\\Interfaces\\IImageDisplaySevice.cs",
+              "ToolTip": "D:\\sourcecode\\bodensee-sportplaetze\\asp.net-core-backend\\dotnet-api\\Interfaces\\IImageDisplaySevice.cs",
+              "RelativeToolTip": "dotnet-api\\Interfaces\\IImageDisplaySevice.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-16T08:24:27.362Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Program.cs",
+              "DocumentMoniker": "D:\\sourcecode\\bodensee-sportplaetze\\asp.net-core-backend\\dotnet-api\\Program.cs",
+              "RelativeDocumentMoniker": "dotnet-api\\Program.cs",
+              "ToolTip": "D:\\sourcecode\\bodensee-sportplaetze\\asp.net-core-backend\\dotnet-api\\Program.cs",
+              "RelativeToolTip": "dotnet-api\\Program.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAAA8AAAAaAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-16T08:03:05.131Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
     }
   ]
 }
