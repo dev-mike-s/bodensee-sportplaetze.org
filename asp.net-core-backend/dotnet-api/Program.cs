@@ -1,9 +1,24 @@
+// Program.cs - MINIMAL API
+
+using dotnet_api.Data;
+using dotnet_api.Interfaces;
+using dotnet_api.Services;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddControllers();
+builder.Services.AddDbContext<InMemoryDb>(opt => opt.UseInMemoryDatabase("imDb"));
+//builder.Services.AddControllers();
+//builder.Services.AddEndpointsApiExplorer(); siehe Zeile 28
+builder.Services.AddSwaggerGen();
 builder.Services.AddOpenApi();
+builder.Services.AddScoped<IImageDisplayService, ImageDisplayService>();
+builder.Services.AddScoped<IImageUploadService, ImageUploadService>();
+builder.Services.AddScoped<IImageValidationService, ImageValidationService>();
+
 var app = builder.Build();
-if (app.Environment.IsDevelopment()) { app.MapOpenApi(); }
+if (app.Environment.IsDevelopment()) { 
+    app.MapOpenApi(); 
+}
 app.UseAuthorization();
 app.Use(async (context, next) =>
 {
@@ -11,9 +26,13 @@ app.Use(async (context, next) =>
     Console.WriteLine($"Request: {context.Request.Method} {context.Request.Path} {context.Response.StatusCode}");
 });
 app.MapControllers();
-app.MapGet("/api/upload-image", () => "Hello .NET API world! I'm back FAHHH <3");
-app.Run();
 
+app.MapGet("/hello", () => "hello .net web api");
+app.MapGet("/api/display",      (IImageDisplayService imageDisplayService)          => imageDisplayService.GetTest());
+app.MapGet("/api/upload",       (IImageUploadService imageUploadService)            => imageUploadService.GetTest());
+app.MapGet("/api/validation",   (IImageValidationService imageValidationService)    => imageValidationService.GetTest());
+
+app.Run();
 /*
 public class MyDbContext: DbContext
 {
