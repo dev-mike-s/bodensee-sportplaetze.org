@@ -1,6 +1,6 @@
-using dotnet_api.Interfaces;
 using dotnet_api.Models;
 using dotnet_api.Data;
+using dotnet_api.Services.Interfaces;
 
 namespace dotnet_api.Services;
 internal sealed class ImageDisplayService : IImageDisplayService

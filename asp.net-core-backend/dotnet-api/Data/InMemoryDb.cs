@@ -3,9 +3,12 @@ using dotnet_api.Models;
 
 namespace dotnet_api.Data
 {
-    public class ImageDb : DbContext
+    /// <summary>
+    /// Test DB for quick prototyping and dual data source practice.
+    /// </summary>
+    public class InMemoryDb : DbContext
     {
-        public ImageDb(DbContextOptions<ImageDb> options) : base(options) { }
+        public InMemoryDb(DbContextOptions<InMemoryDb> options) : base(options) { }
         public DbSet<Image> Images { get; set; } = default!;
     }
 }
