@@ -6,49 +6,39 @@
 *.user
 *.userosscache
 *.sln.docstates
+*.iml
+_ReSharper*/
+*.DotSettings.user
 
-# Build output
+# Build and test output
 **/bin/
 **/obj/
 **/artifacts/
-
-# Publish
 **/publish/
-
-# Test output
 **/TestResults/
 *.trx
 
-# NuGet
+# NuGet packages
 *.nupkg
 packages/
 
-# Entity Framework / Local DB
+# Entity Framework and local databases
 *.mdf
 *.ldf
 *.sqlite
 *.db
 
-# Logs
+# Logs and temporary files
 *.log
 *.tmp
-
-# OS files
-.DS_Store
-Thumbs.db
-
-# JetBrains Rider / IntelliJ
-*.iml
-_ReSharper*/
-*.DotSettings.user
 
 # Generated MSBuild files
 **/project.assets.json
 
-# Machine-specific configuration
-# Ignore development settings and launch profiles if they contain secrets or machine-specific values
+# Machine-specific configuration or local secrets
 **/appsettings.Development.json
 **/Properties/launchSettings.json
 
-# Optional: ignore IDE HTTP request collections
-*.http
+# OS files
+.DS_Store
+Thumbs.db

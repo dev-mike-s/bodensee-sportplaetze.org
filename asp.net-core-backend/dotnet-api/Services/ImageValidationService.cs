@@ -1,4 +1,4 @@
-using dotnet_api.Interfaces;
+using dotnet_api.Services.Interfaces;
 
 namespace dotnet_api.Services;
 

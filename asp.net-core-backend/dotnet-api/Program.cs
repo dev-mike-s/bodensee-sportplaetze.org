@@ -1,12 +1,12 @@
 // Program.cs - MINIMAL API
 
 using dotnet_api.Data;
-using dotnet_api.Interfaces;
 using dotnet_api.Services;
+using dotnet_api.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddDbContext<InMemoryDb>(opt => opt.UseInMemoryDatabase("imDb"));
+builder.Services.AddDbContext<InMemoryDb>(opt => opt.UseInMemoryDatabase("iDb"));
 //builder.Services.AddControllers();
 //builder.Services.AddEndpointsApiExplorer(); siehe Zeile 28
 builder.Services.AddSwaggerGen();
@@ -27,10 +27,14 @@ app.Use(async (context, next) =>
 });
 app.MapControllers();
 
-app.MapGet("/hello", () => "hello .net web api");
-app.MapGet("/api/display",      (IImageDisplayService imageDisplayService)          => imageDisplayService.GetTest());
-app.MapGet("/api/upload",       (IImageUploadService imageUploadService)            => imageUploadService.GetTest());
-app.MapGet("/api/validation",   (IImageValidationService imageValidationService)    => imageValidationService.GetTest());
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapConnections("/api/display", (IImageDisplayService imageDisplayService) => imageDisplayService.GetTest());
+});
+//app.MapGet("/hello", () => "hello .net web api");
+//app.MapGet("/api/display",      (IImageDisplayService imageDisplayService)          => imageDisplayService.GetTest());
+//app.MapGet("/api/upload",       (IImageUploadService imageUploadService)            => imageUploadService.GetTest());
+//app.MapGet("/api/validation",   (IImageValidationService imageValidationService)    => imageValidationService.GetTest());
 
 app.Run();
 /*
