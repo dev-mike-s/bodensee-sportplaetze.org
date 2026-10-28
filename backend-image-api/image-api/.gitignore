@@ -1,0 +1,42 @@
+# .NET build and test output
+**/bin/
+**/obj/
+**/artifacts/
+**/publish/
+**/TestResults/
+*.trx
+
+# NuGet packages
+*.nupkg
+packages/
+
+# IDE files
+.vs/
+.vscode/
+.idea/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.iml
+_ReSharper*/
+*.DotSettings.user
+
+# Local databases and logs
+*.mdf
+*.ldf
+*.sqlite
+*.db
+*.log
+*.tmp
+
+# Generated MSBuild files
+**/project.assets.json
+
+# Machine-specific configuration or local secrets
+**/appsettings.Development.json
+**/Properties/launchSettings.json
+
+# OS files
+.DS_Store
+Thumbs.db
