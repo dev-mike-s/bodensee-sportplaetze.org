@@ -1,7 +1,9 @@
+//root/app/page.tsx
 
 'use client'
 
 import SearchBar from "../components/searchBar";
+import Link from "next/link";
 
 export default function HomePage() {
 
@@ -28,6 +30,10 @@ export default function HomePage() {
                     </h3>
 
                     <SearchBar />
+
+                    <nav>
+                        <Link href="/detail">Details</Link>
+                    </nav>
                 </div>
 
             </div>
