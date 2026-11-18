@@ -1,6 +1,7 @@
 ﻿using image_api.Models;
 using image_api.Data;
 using image_api.Services.Interfaces;
+using Microsoft.AspNetCore.Mvc;
 
 namespace image_api.Services;
 
@@ -31,11 +32,14 @@ internal sealed class ImageUploadService : IImageUploadService
         return "Test upload service";
     }
 
-    public async Task<Image> UploadImageAsync(Image image)
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="image"></param>
+    /// <returns></returns>
+    public async Task<Image> UploadImageAsync(IFormFile file)
     {
-        _db.Images.Add(image);
-        await _db.SaveChangesAsync();
-        return image;
+        return null;
     }
 
     /// <summary>
