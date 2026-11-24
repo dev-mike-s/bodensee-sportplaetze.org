@@ -1,4 +1,5 @@
-﻿namespace image_api.Types
+﻿
+namespace image_api.Types
 {
     public enum ImageStatus
     {

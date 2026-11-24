@@ -1,5 +1,6 @@
 ﻿using image_api.Models;
 using image_api.Data;
+using image_api.Types;
 using image_api.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -37,12 +38,28 @@ internal sealed class ImageUploadService : IImageUploadService
     /// </summary>
     /// <param name="image"></param>
     /// <returns></returns>
-    public async Task<Image> UploadImageAsync(IFormFile file)
+    public async Task<Image> ImageUploadAsync(IFormFile file)
     {
-        return null;
+        var uploadsDir = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot","uploads");
+        Directory.CreateDirectory(uploadsDir);
+        var storedName = $"{Guid.NewGuid()}{Path.GetExtension(file.FileName)}";
+        var filePath = Path.Combine(uploadsDir, storedName);
+        await using var stream = File.Create(filePath);
+        await file.CopyToAsync(stream);
+        
+        var image = new Image
+        {
+            Id = Guid.NewGuid(),
+            FileName = storedName,
+            Status = ImageStatus.PendingReview,
+            UploadedAt = DateTime.UtcNow
+        };
+        await _db.AddImageAsync(image);
+        return image;
     }
 
     /// <summary>
+    /// todo check if obsolete.
     /// Create Image returns img from db.
     /// </summary>
     /// <param name="image"></param>
