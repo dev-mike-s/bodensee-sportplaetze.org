@@ -8,6 +8,6 @@ namespace image_api.Services.Interfaces
     /// </summary>
     public interface IImageUploadService
     {
-        public Task<Image> UploadImageAsync(IFormFile file);
+        public Task<Image> ImageUploadAsync(IFormFile file);
     }
 }

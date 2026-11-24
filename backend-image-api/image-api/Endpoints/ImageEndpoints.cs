@@ -7,7 +7,20 @@ namespace image_api.Endpoints
     {
         public static void Map(WebApplication app)
         {
-
+            /// <summary>
+            /// Endpoint to upload an image.
+            /// </summary>
+            app.MapPost("/api/images/upload", async (IFormFile file, IImageUploadService imageUploadService) =>
+            {
+                if (file is null || file.Length == 0)
+                {
+                    return Results.BadRequest("Keine Datei erhalten.");
+                }
+                var image = await imageUploadService.ImageUploadAsync(file);
+                
+                return Results.Created($"/api/images/{image.Id}", image); //201
+            });
+        
             /// <summary>
             /// todo
             /// </summary>
@@ -20,25 +33,12 @@ namespace image_api.Endpoints
             /// <summary>
             /// todo
             /// </summary>
-            app.MapGet("/images/{id}", async (int id, IImageDisplayService imageDisplayService) =>
+            app.MapGet("/api/images/{id}", async (int id, IImageDisplayService imageDisplayService) =>
             {
                 var image = imageDisplayService.GetImageById(id);
                 return Results.Ok();
             });
 
-            /// <summary>
-            /// Endpoint to upload an image.
-            /// </summary>
-            app.MapPost("/api/images/upload", async (IFormFile file, IImageUploadService imageUploadService) =>
-            {
-                if (file is null || file.Length == 0)
-                {
-                    return Results.BadRequest("Keine Datei erhalten.");
-                }
-                var image = await imageUploadService.UploadImageAsync(file);
-                
-                return Results.Created($"/api/images/{image.Id}", image); //201
-            });
         }
     }
 }
