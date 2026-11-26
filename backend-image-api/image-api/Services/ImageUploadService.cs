@@ -15,14 +15,16 @@ internal sealed class ImageUploadService : IImageUploadService
 
     Guid _serviceId;
     private readonly InMemoryDb _db;
+    private readonly ILogger<ImageUploadService> _logger;
 
     #endregion
     #region --- CONSTRUCTOR ---
 
-    public ImageUploadService(InMemoryDb inMemoryDb)
+    public ImageUploadService(InMemoryDb inMemoryDb, ILogger<ImageUploadService> logger)
     {
         _db = inMemoryDb;
         _serviceId = Guid.NewGuid();
+        _logger = logger;
     }
 
     #endregion
@@ -40,6 +42,8 @@ internal sealed class ImageUploadService : IImageUploadService
     /// <returns></returns>
     public async Task<Image> ImageUploadAsync(IFormFile file)
     {
+        _logger.LogInformation("Logger: Upload Funktion gestartet...");
+
         var uploadsDir = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot","uploads");
         Directory.CreateDirectory(uploadsDir);
         var storedName = $"{Guid.NewGuid()}{Path.GetExtension(file.FileName)}";

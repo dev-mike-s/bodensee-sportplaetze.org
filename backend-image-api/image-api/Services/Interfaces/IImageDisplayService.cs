@@ -8,6 +8,6 @@ namespace image_api.Services.Interfaces
     public interface IImageDisplayService
     {
         Task<IEnumerable<Image>> GetImages();
-        Task<Image> GetImageById(int id);
+        Task<Image> GetImageById(Guid id);
     }
 }

@@ -1,0 +1,10 @@
+Bodensee-Sportplätze – Prototyp-Todos
+
+Ziel: Besucher finden Sportplätze in der Bodenseeregion und können fehlende Informationen mit Bildern ergänzen.
+
+[ ] Platzbilder beim Hochladen einem Sportplatz zuordnen, damit sie später beim richtigen Platz erscheinen.
+[ ] Uploads auf gängige Bilddateien begrenzen und verständliche Rückmeldungen bei Fehlern anzeigen.
+[ ] Hochgeladene Bilder abrufbar machen, damit das Frontend sie in Platz-Details anzeigen kann.
+[ ] Eine einfache Freigabe für neue Bilder ermöglichen: erst prüfen, dann veröffentlichen.
+[ ] Platzbilder und ihren Freigabestatus nach einem Neustart behalten.
+[ ] Frontend und Bild-API verbinden und den Ablauf einmal durchspielen: Bild auswählen, hochladen, wiederfinden und anzeigen.

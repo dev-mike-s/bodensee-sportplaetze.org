@@ -7,6 +7,6 @@ namespace image_api.Services.Interfaces
     /// </summary>
     public interface IImageUpdateService
     {
-        Task<Image> UpdateImage(int id, Image image);
+        Task<Image> UpdateImage(Guid id, Image image);
     }
 }

@@ -8,7 +8,7 @@ namespace image_api.Services
     /// </summary>
     public interface ImageUpdateService : IImageUpdateService
     {
-        public async Task<Image> UpdateImage(int id, Image image)
+        public async Task<Image> UpdateImage(Guid id, Image image)
         {
             throw new NotImplementedException();
         }
