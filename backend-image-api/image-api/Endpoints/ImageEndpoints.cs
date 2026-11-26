@@ -1,4 +1,5 @@
-﻿using image_api.Data;
+﻿using System.Reflection.Metadata;
+using image_api.Data;
 using image_api.Services.Interfaces;
 
 namespace image_api.Endpoints
@@ -19,7 +20,7 @@ namespace image_api.Endpoints
                 var image = await imageUploadService.ImageUploadAsync(file);
                 
                 return Results.Created($"/api/images/{image.Id}", image); //201
-            });
+            }).DisableAntiforgery();
         
             /// <summary>
             /// todo
@@ -33,7 +34,7 @@ namespace image_api.Endpoints
             /// <summary>
             /// todo
             /// </summary>
-            app.MapGet("/api/images/{id}", async (int id, IImageDisplayService imageDisplayService) =>
+            app.MapGet("/api/images/{id}", async (Guid id, IImageDisplayService imageDisplayService) =>
             {
                 var image = imageDisplayService.GetImageById(id);
                 return Results.Ok();

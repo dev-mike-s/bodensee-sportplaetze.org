@@ -47,7 +47,7 @@ namespace image_api.Services
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public async Task<Image> GetImageById(int id) 
+        public async Task<Image> GetImageById(Guid id) 
         {
             return null;
         }
